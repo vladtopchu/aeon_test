@@ -1,4 +1,4 @@
-package com.topchu.aeon_test_app.ui.fragments
+package com.topchu.aeon_test_app.presentation.payments
 
 import android.os.Bundle
 import android.util.Log
@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.topchu.aeon_test_app.R
 import com.topchu.aeon_test_app.adapters.BasicAdapter
 import com.topchu.aeon_test_app.databinding.FragmentPaymentsBinding
-import com.topchu.aeon_test_app.ui.viewmodels.PaymentsViewModel
 import com.topchu.aeon_test_app.utils.SharedPref
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -49,14 +48,21 @@ class PaymentsFragment: Fragment() {
         recyclerViewAdapter = BasicAdapter()
         binding.recyclerView.adapter = recyclerViewAdapter
 
-        viewModel.getPaymentsObserver().observe(viewLifecycleOwner, {
-            if (it != null) {
-                recyclerViewAdapter.setPayments(it)
-                recyclerViewAdapter.notifyDataSetChanged()
+        viewModel.state.observe(viewLifecycleOwner, {
+            if(it.isLoading) {
+                binding.progressCircular.visibility = View.VISIBLE
             } else {
-                Toast.makeText(requireContext(), "Произошла ошибка", Toast.LENGTH_LONG).show()
+                binding.progressCircular.visibility = View.GONE
+            }
+            if(it.error.isNotBlank()){
+                Toast.makeText(requireContext(), it.error, Toast.LENGTH_LONG).show()
+            }
+            if(it.payments != null){
+                recyclerViewAdapter.setPayments(it.payments)
+                recyclerViewAdapter.notifyDataSetChanged()
             }
         })
+
         viewModel.getPayments(sharedPref.getUserToken()!!)
 
         binding.logout.setOnClickListener {

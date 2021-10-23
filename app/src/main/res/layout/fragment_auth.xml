@@ -1,32 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:gravity="center"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/login"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:inputType="text"/>
+    <LinearLayout
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/password"
-        android:inputType="textPassword"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_marginVertical="20dp"/>
+        <EditText
+            android:id="@+id/login"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:inputType="text"/>
 
-    <TextView
-        android:id="@+id/processLogin"
+        <EditText
+            android:id="@+id/password"
+            android:inputType="textPassword"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="20dp"/>
+
+        <TextView
+            android:id="@+id/processLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_login"
+            android:text="Войти"
+            android:textColor="@color/white"
+            android:paddingHorizontal="30dp"
+            android:paddingVertical="10dp"/>
+
+    </LinearLayout>
+
+
+    <ProgressBar
+        android:id="@+id/progress_circular"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/button_login"
-        android:text="Войти"
-        android:textColor="@color/white"
-        android:paddingHorizontal="30dp"
-        android:paddingVertical="10dp"/>
+        android:background="@color/white"
+        android:layout_centerInParent="true"
+        android:visibility="gone"/>
 
-</LinearLayout>
+</RelativeLayout>

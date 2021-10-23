@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Aeon_test_app">
         <activity
-            android:name=".ui.MainActivity"
+            android:name=".presentation.MainActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>

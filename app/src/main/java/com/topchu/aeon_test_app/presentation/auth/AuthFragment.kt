@@ -1,6 +1,7 @@
-package com.topchu.aeon_test_app.ui.fragments
+package com.topchu.aeon_test_app.presentation.auth
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,10 +10,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.topchu.aeon_test_app.R
-import com.topchu.aeon_test_app.data.remote.models.LoginModel
+import com.topchu.aeon_test_app.data.remote.models.AuthModel
 import com.topchu.aeon_test_app.databinding.FragmentAuthBinding
-import com.topchu.aeon_test_app.ui.viewmodels.AuthViewModel
+import com.topchu.aeon_test_app.utils.SharedPref
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class AuthFragment: Fragment() {
@@ -21,6 +23,9 @@ class AuthFragment: Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: AuthViewModel by viewModels()
+
+    @Inject
+    lateinit var sharedPref: SharedPref
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,16 +39,18 @@ class AuthFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-        viewModel.success.observe(viewLifecycleOwner, {
-            if(it){
-                findNavController().navigate(R.id.paymentsFragment)
+        viewModel.state.observe(viewLifecycleOwner, {
+            if(it.isLoading) {
+                binding.progressCircular.visibility = View.VISIBLE
+            } else if(!it.isLoading && binding.progressCircular.visibility == View.VISIBLE) {
+                binding.progressCircular.visibility = View.GONE
             }
-        })
-
-        viewModel.error.observe(viewLifecycleOwner, {
-            if(it){
-                Toast.makeText(requireContext(), "Произошла ошибка", Toast.LENGTH_LONG).show()
+            if(it.error.isNotBlank()){
+                Toast.makeText(requireContext(), it.error, Toast.LENGTH_LONG).show()
+            }
+            if(it.token != null){
+                sharedPref.setUserToken(it.token)
+                findNavController().navigate(R.id.paymentsFragment)
             }
         })
 
@@ -52,7 +59,7 @@ class AuthFragment: Fragment() {
                 binding.password.text.toString().isEmpty()){
                 Toast.makeText(requireContext(), "Заполните все поля!", Toast.LENGTH_LONG).show()
             } else {
-                viewModel.login(LoginModel(binding.login.text.toString(), binding.password.text.toString()))
+                viewModel.login(AuthModel(binding.login.text.toString(), binding.password.text.toString()))
             }
         }
     }

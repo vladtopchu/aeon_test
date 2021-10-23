@@ -4,7 +4,7 @@ data class TokenModel(
     val token: String?
 )
 
-data class LoginResponseModel(
+data class AuthResponseModel(
     val success: String?,
     val response: TokenModel?
 )

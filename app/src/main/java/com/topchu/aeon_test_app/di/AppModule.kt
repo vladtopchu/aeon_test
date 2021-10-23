@@ -27,12 +27,9 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideApi(retrofit: Retrofit) = retrofit.create(TestService::class.java)
-
-    @Provides
-    @Singleton
-    fun provideRetrofit() = Retrofit.Builder()
+    fun provideApi(): TestService = Retrofit.Builder()
         .baseUrl(BASE_URL)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
+        .create(TestService::class.java)
 }

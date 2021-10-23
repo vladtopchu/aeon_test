@@ -1,4 +1,4 @@
-package com.topchu.aeon_test_app.ui
+package com.topchu.aeon_test_app.presentation
 
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
