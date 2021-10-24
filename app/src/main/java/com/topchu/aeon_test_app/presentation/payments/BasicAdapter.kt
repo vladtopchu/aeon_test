@@ -1,4 +1,4 @@
-package com.topchu.aeon_test_app.adapters
+package com.topchu.aeon_test_app.presentation.payments
 
 import android.icu.text.SimpleDateFormat
 import android.view.LayoutInflater
@@ -6,8 +6,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.topchu.aeon_test_app.data.remote.models.PaymentModel
 import com.topchu.aeon_test_app.databinding.ItemPaymentBinding
-import java.time.Instant
-import java.time.format.DateTimeFormatter
 import java.util.*
 
 class BasicAdapter(): RecyclerView.Adapter<BasicAdapter.BasicViewHolder>() {

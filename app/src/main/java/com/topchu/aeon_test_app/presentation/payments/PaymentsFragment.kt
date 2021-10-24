@@ -1,7 +1,6 @@
 package com.topchu.aeon_test_app.presentation.payments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +11,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.topchu.aeon_test_app.R
-import com.topchu.aeon_test_app.adapters.BasicAdapter
 import com.topchu.aeon_test_app.databinding.FragmentPaymentsBinding
 import com.topchu.aeon_test_app.utils.SharedPref
 import dagger.hilt.android.AndroidEntryPoint
